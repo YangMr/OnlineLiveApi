@@ -7,7 +7,7 @@ class ManagerController extends Controller {
 	async create(){
 		const {ctx} = this;
 		
-		await ctx.render("1.html")
+		await ctx.render("/admin/manager/create.html")
 	}
 }
 
