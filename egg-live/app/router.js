@@ -5,5 +5,7 @@
  */
 module.exports = app => {
   const { router, controller } = app;
-  router.get('/', controller.home.index);
+  
+  //admin API
+  router.get("/admin/manager/create",controller.admin.manager.create)
 };

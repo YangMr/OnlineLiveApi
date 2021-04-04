@@ -67,6 +67,12 @@ module.exports = appInfo => {
 			underscored: true
 		}
 	};
+	
+	config.view = {
+	    mapping: {
+	      '.html': 'nunjucks',
+	    },
+	  };
 
 
 	return {
