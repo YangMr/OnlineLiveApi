@@ -27,13 +27,15 @@ module.exports = appInfo => {
 	config.security = {
 		// 关闭 csrf
 		csrf: {
-			headerName: 'x-csrf-token',
-			ignore: ctx => {
-				return ctx.request.url.startsWith('/api')
-			},
+			enable: false,
+			ignoreJSON: true
+			// headerName: 'x-csrf-token',
+			// ignore: ctx => {
+			// 	return ctx.request.url.startsWith('/api')
+			// },
 		},
 		// 跨域白名单
-		// domainWhiteList: ['http://localhost:3000'],
+		domainWhiteList: ['*'],
 	};
 
 
@@ -67,13 +69,21 @@ module.exports = appInfo => {
 			underscored: true
 		}
 	};
-	
-	config.view = {
-	    mapping: {
-	      '.html': 'nunjucks',
-	    },
-	  };
 
+	config.view = {
+		mapping: {
+			'.html': 'nunjucks',
+		},
+	};
+
+	config.valparams = {
+		locale    : 'zh-cn',
+		throwError: true
+	};
+
+	config.crypto = {
+		secret:  'qhdgw@45ncashdaksh2!#@3nxjdas*_672'
+	};
 
 	return {
 		...config,

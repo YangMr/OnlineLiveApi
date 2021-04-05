@@ -1,4 +1,4 @@
-
+const crypto = require('crypto');
 module.exports = app => {
     const { STRING, INTEGER, DATE, ENUM, TEXT } = app.Sequelize;
 
@@ -19,7 +19,13 @@ module.exports = app => {
             type: STRING,
             allowNull: false,
             defaultValue: '',
-            comment: "密码"
+            comment: "密码",
+            set(val) {
+                const hmac = crypto.createHash("sha256", app.config.crypto.secret);
+                hmac.update(val);
+                let hash = hmac.digest("hex");
+                this.setDataValue('password', hash);
+            }
         },
         created_time:DATE,
         updated_time: DATE,
