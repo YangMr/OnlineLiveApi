@@ -94,7 +94,11 @@ class ManagerController extends Controller {
 	async index(){
 		let {ctx,app} = this;
 
-		let data = await app.model.Manager.findAll();
+		let data = await ctx.page("Manager")
+
+		console.log(data)
+
+		// let res = await app.model.Manager.findAndCountAll();
 
 		await ctx.render("/admin/manager/index.html",{
 			data
@@ -106,9 +110,14 @@ class ManagerController extends Controller {
 	async iindex(){
 		let {ctx,app} = this;
 
-		console.log(ctx.query)
+		let page = ctx.query.page ? parseInt(ctx.query.page) : 1;
+		let limit = ctx.query.limit ? parseInt( ctx.query.limit) : 5;
+		let offset = (page -1) * limit;
 
-		let list = await app.model.Manager.findAll();
+		let list = await app.model.Manager.findAndCountAll({
+			offset,
+			limit
+		});
 
 		ctx.apiSuccess({
 			data : list

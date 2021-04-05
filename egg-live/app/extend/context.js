@@ -10,4 +10,19 @@ module.exports = {
     this.body = { msg, data };
     this.status = code;
   },
+  //分页
+  async page(moduleName,where = {},options = {}){
+    let page = this.query.page ? parseInt(this.query.page) : 1;
+		let limit = this.query.limit ? parseInt( this.query.limit) : 5;
+		let offset = (page -1) * limit;
+
+    let res = await this.app.model[moduleName].findAndCountAll({
+      where,
+      offset,
+      limit,
+      ...options
+    });
+
+    return res.rows;
+  }
 };
