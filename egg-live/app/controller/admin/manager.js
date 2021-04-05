@@ -89,6 +89,32 @@ class ManagerController extends Controller {
 			message: "创建成功"
 		})
 	}
+
+	//获取管理员列表
+	async index(){
+		let {ctx,app} = this;
+
+		let data = await app.model.Manager.findAll();
+
+		await ctx.render("/admin/manager/index.html",{
+			data
+		})
+	}
+
+
+	//获取管理员列表接口
+	async iindex(){
+		let {ctx,app} = this;
+
+		console.log(ctx.query)
+
+		let list = await app.model.Manager.findAll();
+
+		ctx.apiSuccess({
+			data : list
+		})
+	}
+
 }
 
 module.exports = ManagerController;
